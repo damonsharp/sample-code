@@ -53,7 +53,6 @@
 			 */
 			public function initialize_option_pages()
 			{
-				// echo '<pre>'; print_r($this->opts); echo '</pre>';
 				foreach ( $this->opts as $page )
 				{
 					if ( $page['type'] == 'menu' )
