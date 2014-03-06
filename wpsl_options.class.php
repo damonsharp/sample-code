@@ -13,7 +13,7 @@
 
 
 			/**
-			 * Hold plugin options from config array
+			 * Hold plugin view content
 			 */
 			public $view_src;
 
