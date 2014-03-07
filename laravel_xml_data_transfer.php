@@ -8,7 +8,7 @@
      * incremental/changed entries) on a timed basis (CRON via Artisan command).
      *
      * Once the data is queried, build the XML file for upload and a manifest file per the
-     * specifications provided by the client, upload to the JnJ MBOX, and update the
+     * specifications provided by the client, upload to the remote server, and update the
      * 'last_xml_dump' value in the options table for next time.
      * 
      */
