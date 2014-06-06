@@ -43,8 +43,8 @@
 			{
 				// Setup base plugin constants
 				$this->setup_stats_constants();
-
-				// Check that 
+				
+				// Check that main WPSL plugin exists
 				global $wpsl;
 				if ( is_null($wpsl) )
 				{
@@ -54,8 +54,10 @@
 				else
 				{
 					$this->register_addon();
+					add_filter( 'sws_wpsl_options', array($this, 'merge_stats_options') );
 					add_action( 'init', array($this, 'setup_autoload') );				
 					add_action( 'init', array($this, 'instantiate_classes') );
+					//add_action( 'sws_wpsl_output_addons_options', function(){ sws_get_plugin_part(SWS_WPSL_OPTIONS_PAGES, 'sws_wpsl_dashboard'); }, 10 );
 				}
 			}
 
@@ -125,9 +127,6 @@
 
 				// Plugin Support URL
 				define('SWS_WPSL_STATS_SUPPORT_URL', 'http://wpsportsleagues.com/support');
-
-				// WordPress Version
-				define('WP_VERSION', get_bloginfo('version'));
 				
 				// Skip choosing a sport to install
 				define('SWS_WPSL_STATS_SKIP_INSTALL', FALSE);
@@ -218,10 +217,11 @@
 			 * @param void
 			 * @return array of plugin options
 			 */
-			public function get_stats_options()
+			public function merge_stats_options($core_opts)
 			{
 				$stats_opts = require(SWS_WPSL_STATS_OPTIONS . 'sws_wpsl_stats_options.php');
-				return $stats_opts;
+				$merged_opts = array_merge_recursive($core_opts, $stats_opts);
+				return $merged_opts;
 			}
 
 
@@ -236,8 +236,7 @@
 			{
 				global $wpsl;
 				$addon = array(
-					'name' => SWS_WPSL_STATS_PLUGIN_NAME,
-					'options' => $this->get_stats_options()					
+					'name' => SWS_WPSL_STATS_PLUGIN_NAME					
 				);
 				$wpsl->register_addons($addon);
 			}

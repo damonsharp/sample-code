@@ -237,10 +237,7 @@
 	    		$record_count = is_array($data) ? 0 : $data->count();
 	    		return trim(View::make($view, array('data' => $data, 'count' => $record_count))->render());
 	    	}
-	    	else
-	    	{
-	    		return trim(View::make($view, array('data' => $data))->render());
-	    	}
+	    	return trim(View::make($view, array('data' => $data))->render());
 	    }
 
 

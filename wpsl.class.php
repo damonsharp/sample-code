@@ -144,7 +144,7 @@
 				register_activation_hook( __FILE__, array($this, 'on_activation') );
 				register_deactivation_hook( __FILE__, array($this, 'on_deactivation') );
 
-				add_action( 'init', array($this, 'get_all_options') );
+				add_action( 'init', array($this, 'set_options_array') );
 				add_action( 'init', array($this, 'instantiate_classes') );
 				add_action( 'init', array($this, 'setup_post_types') );
 				add_action( 'init', array($this, 'setup_taxonomies') );
@@ -160,9 +160,10 @@
 			 * @param void
 			 * @return array the plugin options array
 			 */
-			public function get_options_array()
+			public function set_options_array()
 			{
-				return require(SWS_WPSL_OPTIONS . 'sws_wpsl_options.php');
+				$opts = require(SWS_WPSL_OPTIONS . 'sws_wpsl_options.php');
+				$this->opts = apply_filters('sws_wpsl_options', $opts);
 			}
 
 
@@ -326,26 +327,15 @@
 
 
 			/**
-			 * Get all plugin options (including registered addons)
+			 * Get all plugin addons
 			 *
 			 * @since 1.0
 			 * @param void
 			 * @return array the plugin options array
 			 */
-			public function get_all_options()
+			public function get_all_addons()
 			{
-				$this->opts = $this->get_options_array();
-				if ( ! empty($this->_addons) )
-				{
-					foreach ( $this->_addons as $addon_key => $addon )
-					{
-						foreach ( $addon['options'] as $opt_key => $options )
-						{
-							$this->opts[$opt_key][] = $options[$addon_key];
-						}
-					}
-				}
-				return $this->opts;
+				return $this->_addons;
 			}
 
 
@@ -359,7 +349,7 @@
 			 * @param void
 			 * @return void set $opts property
 			 */
-			public function register_addons( array $addon = array() )
+			public function register_addons( array $addon )
 			{
 				$this->_addons = array();
 				array_push( $this->_addons, $addon );
