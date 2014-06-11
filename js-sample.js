@@ -1,10 +1,10 @@
 jQuery.noConflict();
 
-var Mercury = Mercury || {};
+var Presentation = Presentation || {};
 
 (function($){
 
-    Mercury.SelfDetail = {
+    Presentation.SelfDetail = {
 
         // Initialize self detail and load up the presentation container,
         // messages, and/or both
@@ -77,7 +77,7 @@ var Mercury = Mercury || {};
             var self = this;
 
             if ( presentationCuid || 0 < presentationCuid.length ) {
-                domain = "demo.iqmercury.com";
+                domain = "demo.presentation.com";
 
                 var iFrame = $('#pres-container'),
                     presentationURL = 'http://' + this.domain + '/Presentations/';
@@ -115,7 +115,7 @@ var Mercury = Mercury || {};
         // function and execute.
         metrics: {
 
-            // Map the Mercury Metric API call to the appropriate method below.
+            // Map the Presentation Metric API call to the appropriate method below.
             // If the method doesn't exist, console a message via this.DebugTrace()
             call: function(functionName, args) {
 
@@ -132,7 +132,7 @@ var Mercury = Mercury || {};
 
                 }
 
-                var self = Mercury.SelfDetail.metrics,
+                var self = Presentation.SelfDetail.metrics,
                     metricData = {
 
                         "Data": args ? args : '',
@@ -153,7 +153,7 @@ var Mercury = Mercury || {};
                 $.ajax({
                     async: asynchronous,
                     type: 'POST',
-                    url: "http://" + Mercury.SelfDetail.domain + "/api/metric/inperson",
+                    url: "http://" + Presentation.SelfDetail.domain + "/api/metric/inperson",
                     beforeSend: function(xhr) {
                         xhr.setRequestHeader("Authorization", "Basic " + base64.encode(metricUser + ":" + metricAuth));
                     },
@@ -182,7 +182,7 @@ var Mercury = Mercury || {};
                 self.StoreMetric(args);
 
                 // Display a message to the user that they can close their browser
-                Mercury.SelfDetail.displayMessage( msg, false, true );
+                Presentation.SelfDetail.displayMessage( msg, false, true );
 
             },
 
@@ -290,6 +290,6 @@ var Mercury = Mercury || {};
 
     };
 
-    Mercury.SelfDetail.init();
+    Presentation.SelfDetail.init();
 
 })(jQuery);
