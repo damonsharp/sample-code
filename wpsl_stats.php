@@ -6,7 +6,7 @@
 
 		/**
 		* Plugin Name: SWS WP Sports Leagues Statistics Addon
-		* Plugin URI: http://wpsportsleagues.com/addons
+		* Plugin URI: http://wpsportsleaguesplug.in/addons
 		* Description:  Adds statistics management capabilities to the SWS WP Sports Leagues plugin. SWS WP Sports Leagues plugin is required.
 		* Version: 1.0.0
 		* Author: Sharp Web Solutions
@@ -23,8 +23,7 @@
 			 * @param void
 			 * @return void
 			 */
-			public function __construct()
-			{
+			public function __construct() {
 				// Must be called at 'init'
 				add_action('init', array($this, 'initialize'));
 			}
@@ -39,20 +38,16 @@
 			 * @param void
 			 * @return void
 			 */
-			public function initialize()
-			{
+			public function initialize() {
 				// Setup base plugin constants
 				$this->setup_stats_constants();
 				
 				// Check that main WPSL plugin exists
 				global $wpsl;
-				if ( is_null($wpsl) )
-				{
+				if ( is_null($wpsl) ) {
 					add_action( 'admin_notices', array($this, 'missing_base_plugin') );
 					add_action( 'network_admin_notices', array($this, 'missing_base_plugin') );
-				}
-				else
-				{
+				} else {
 					$this->register_addon();
 					add_filter( 'sws_wpsl_options', array($this, 'merge_stats_options') );
 					add_action( 'init', array($this, 'setup_autoload') );				
@@ -69,8 +64,7 @@
 			 * @param void
 			 * @return void
 			 */
-			public function setup_autoload()
-			{
+			public function setup_autoload() {
 				// Load any helper functions
 				// require_once(SWS_WPSL_STATS_HELPERS . 'sws_wpsl_stats_helpers.php');
 
@@ -88,8 +82,7 @@
 			 * @param string $class class name
 			 * @return void
 			 */
-			public function autoload_stats_classes( $class )
-			{
+			public function autoload_stats_classes( $class ) {
 				global $wpsl;
 				$wpsl->autoload_classes( $class, SWS_WPSL_STATS_CLASSES);
 			}
@@ -102,8 +95,7 @@
 			 * @param void
 			 * @return void
 			 */
-			public function setup_stats_constants()
-			{
+			public function setup_stats_constants() {
 				// Plugin name
 				define('SWS_WPSL_STATS_PLUGIN_NAME', 'SWS WP Sports Leagues Statistics Addon');
 
@@ -123,10 +115,10 @@
 				define('SWS_WPSL_STATS_REQUIRED_PHP_VERSION', '5.3.0');
 
 				// Plugin Website URL
-				define('SWS_WPSL_STATS_PLUGIN_URL', 'http://wpsportsleagues.com/addons');
+				define('SWS_WPSL_STATS_PLUGIN_URL', 'http://wpsportsleaguesplug.in/addons');
 
 				// Plugin Support URL
-				define('SWS_WPSL_STATS_SUPPORT_URL', 'http://wpsportsleagues.com/support');
+				define('SWS_WPSL_STATS_SUPPORT_URL', 'http://wpsportsleaguesplug.in/support');
 				
 				// Skip choosing a sport to install
 				define('SWS_WPSL_STATS_SKIP_INSTALL', FALSE);
@@ -188,10 +180,7 @@
 			 * @param void
 			 * @return void
 			 */
-			public function instantiate_classes()
-			{
-
-			}
+			public function instantiate_classes() {}
 
 
 			/**
@@ -201,8 +190,7 @@
 			 * @param void
 			 * @return html the message for the user
 			 */
-			public function missing_base_plugin()
-			{
+			public function missing_base_plugin() {
 				$html  = '<div class="error">';
         		$html .= '<p>' . __( 'The SWS WP Sports Leagues plugin must be installed and activated to use the ' . SWS_WPSL_STATS_PLUGIN_NAME . '.', 'sws_wpsl_stats' ) . '</p>';
     			$html .= '</div>';
@@ -214,11 +202,10 @@
 			 * Get the addon's option array file
 			 *
 			 * @since 1.0
-			 * @param void
-			 * @return array of plugin options
+			 * @param $core_opts options array from the core plugin
+			 * @return array of merged plugin options
 			 */
-			public function merge_stats_options($core_opts)
-			{
+			public function merge_stats_options($core_opts) {
 				$stats_opts = require(SWS_WPSL_STATS_OPTIONS . 'sws_wpsl_stats_options.php');
 				$merged_opts = array_merge_recursive($core_opts, $stats_opts);
 				return $merged_opts;
@@ -232,8 +219,7 @@
 			 * @param void
 			 * @return void
 			 */
-			public function register_addon()
-			{
+			public function register_addon() {
 				global $wpsl;
 				$addon = array(
 					'name' => SWS_WPSL_STATS_PLUGIN_NAME					

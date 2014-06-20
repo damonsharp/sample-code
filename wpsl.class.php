@@ -14,11 +14,19 @@
 		* Author URI: http://sharpwebsolutions.com
 		* License: ??
 		*
+		* Copyright 2014 Damon Sharp (http://damonshapr.me)
+		*
 		**/
 		class WPSL {
 
+			/**
+			 * Plugin options array
+			 */
 			public $opts;
 
+			/**
+			 * Registered addons array
+			 */
 			private $_addons;
 
 
@@ -57,8 +65,7 @@
 			 * @param void
 			 * @return void
 			 */
-			public function setup_constants()
-			{
+			public function setup_constants() {
 				// Plugin name
 				define('SWS_WPSL_PLUGIN_NAME', 'SWS WP Sports Leagues');
 
@@ -139,8 +146,7 @@
 			}
 
 
-			public function setup_hooks()
-			{
+			public function setup_hooks() {
 				register_activation_hook( __FILE__, array($this, 'on_activation') );
 				register_deactivation_hook( __FILE__, array($this, 'on_deactivation') );
 
@@ -160,15 +166,13 @@
 			 * @param void
 			 * @return array the plugin options array
 			 */
-			public function set_options_array()
-			{
+			public function set_options_array() {
 				$opts = require(SWS_WPSL_OPTIONS . 'sws_wpsl_options.php');
 				$this->opts = apply_filters('sws_wpsl_options', $opts);
 			}
 
 
-			public function load_helpers()
-			{
+			public function load_helpers() {
 				// Load any helper functions
 				require_once(SWS_WPSL_HELPERS . 'sws_wpsl_helpers.php');
 			}
@@ -181,8 +185,7 @@
 			 * @param void
 			 * @return void
 			 */
-			public function setup_default_options()
-			{
+			public function setup_default_options() {
 				$options = sws_get_plugin_options();
 				$options = $options ? $options : new \stdClass;
 				$options->plugin_version = SWS_WPSL_VERSION;
@@ -199,13 +202,11 @@
 			 * @param string $class class name
 			 * @return void
 			 */
-			public function autoload_classes( $class, $dir = SWS_WPSL_CLASSES )
-			{
+			public function autoload_classes( $class, $dir = SWS_WPSL_CLASSES )	{
 				$class = str_replace('sws_wpsl\\', '', strtolower($class));
 				$file = $dir . "$class.class.php";
 
-				if ( file_exists($file) )
-				{
+				if ( file_exists($file) ) {
 					require_once($file);
 				}
 			}
@@ -218,8 +219,7 @@
 			 * @param void
 			 * @return void
 			 */
-			public function instantiate_classes()
-			{
+			public function instantiate_classes() {
 				new Options($this->opts['option_pages']);
 				new Dashboard_Widgets($this->opts);
 			}
@@ -232,10 +232,7 @@
 			 * @param void
 			 * @return void
 			 */
-			public function on_activation()
-			{
-				
-			}
+			public function on_activation() {}
 
 
 			/**
@@ -245,10 +242,7 @@
 			 * @param void
 			 * @return void
 			 */
-			public function on_deactivation()
-			{
-
-			}
+			public function on_deactivation() {}
 
 
 			/**
@@ -261,10 +255,8 @@
 			 * @param void
 			 * @return void
 			 */
-			public function setup_post_types()
-			{
-				foreach ( $this->opts['post_types'] as $post_type => $args )
-				{
+			public function setup_post_types() {
+				foreach ( $this->opts['post_types'] as $post_type => $args ) {
 					register_post_type( $post_type, $args );
 					add_filter( 'enter_title_here', array($this, 'change_title_placeholder'), 10, 2 );
 				}
@@ -281,10 +273,8 @@
 			 * @param void
 			 * @return void
 			 */
-			public function setup_taxonomies()
-			{
-				foreach ( $this->opts['taxonomies'] as $taxonomy => $args )
-				{
+			public function setup_taxonomies() {
+				foreach ( $this->opts['taxonomies'] as $taxonomy => $args )	{
 					register_taxonomy( $taxonomy, $taxonomy, $args );
 				}
 			}
@@ -300,8 +290,7 @@
 			 * @param $links the WordPress action links array
 			 * @return $links modified links array
 			 */
-			public function filter_plugin_action_links( array $links )
-			{
+			public function filter_plugin_action_links( array $links ) {
 				return wp_parse_args(
 					$this->opts['action_links'],
 					$links
@@ -318,8 +307,7 @@
 			 * @param columns array of current tagle columns
 			 * @return array the plugin options array
 			 */
-			public function custom_teams_table_columns( array $columns )
-			{
+			public function custom_teams_table_columns( array $columns ) {
 				$columns = wp_parse_args( $this->opts['table_columns']['teams'], $columns );
 				unset($columns['date']);
 				return $columns;
@@ -333,8 +321,7 @@
 			 * @param void
 			 * @return array the plugin options array
 			 */
-			public function get_all_addons()
-			{
+			public function get_all_addons() {
 				return $this->_addons;
 			}
 
@@ -347,20 +334,23 @@
 			 *
 			 * @since 1.0
 			 * @param void
-			 * @return void set $opts property
+			 * @return void
 			 */
-			public function register_addons( array $addon )
-			{
+			public function register_addons( array $addon ) {
 				$this->_addons = array();
 				array_push( $this->_addons, $addon );
 			}
 
-
-			public function change_title_placeholder( $title )
-			{
+			/**
+			 * Change the "Enter Title Here text"
+			 *
+			 * @since 1.0
+			 * @param string title of page
+			 * @return string enter title here copy
+			 */
+			public function change_title_placeholder( $title ) {
 				$screen = get_current_screen();
-				switch ( $screen->post_type )
-				{
+				switch ( $screen->post_type ) {
 					case 'teams':
 						$str = 'team name';
 						break;
@@ -383,7 +373,6 @@
 
 					default:
 						$str = 'title';
-
 				}
 				return sprintf('Enter %s here', $str);
 			}

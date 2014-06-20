@@ -13,7 +13,7 @@
 
 
 			/**
-			 * Hold plugin view content
+			 * Hold plugin options from config array
 			 */
 			public $view_src;
 
@@ -27,8 +27,7 @@
 			 * @param void
 			 * @return void
 			 */
-			public function __construct( $opts )
-			{
+			public function __construct( $opts ) {
 				$this->opts = $opts;
 
 				// Create plugin options pages based on $this->opts
@@ -37,7 +36,6 @@
 
 				// Add options to option pages above
 				add_action( 'admin_init', array($this, 'register_options') );
-
 			}
 
 
@@ -51,20 +49,15 @@
 			 * @param void
 			 * @return html page content
 			 */
-			public function initialize_option_pages()
-			{
-				foreach ( $this->opts as $page )
-				{
-					if ( $page['type'] == 'menu' )
-					{
+			public function initialize_option_pages() {
+				// echo '<pre>'; print_r($this->opts); echo '</pre>';
+				foreach ( $this->opts as $page ) {
+					if ( $page['type'] == 'menu' ) {
 						add_menu_page($page['title'], $page['menu_title'], $page['capability'], $page['menu_slug'], array($this, $page['function']), $page['icon_url'], $page['position']);
-					}
-					else
-					{
+					} else {
 						add_submenu_page($page['parent'], $page['title'], $page['menu_title'], $page['capability'], $page['menu_slug'], array($this, $page['function']));
 					}
 				}
-
 				$this->modify_menus();
 			}
 
@@ -76,16 +69,13 @@
 			 * @param void
 			 * @return html page content
 			 */
-			public function register_options()
-			{
+			public function register_options() {
 				// Register theme options page, create sections and options fields
 				register_setting('wpsl_core', 'wpsl_core', array('SWS_Validation', 'process_options') );
 				
 				// Plugin options from config file
-				foreach ( $this->opts as $page )
-				{
-					if ( sws_wpsl_page_is($page['menu_slug']) )
-					{
+				foreach ( $this->opts as $page ) {
+					if ( sws_wpsl_page_is($page['menu_slug']) ) {
 						$this->view_src = $page['view_src'];
 						add_settings_section( $page['menu_slug'], $page['title'], array($this, 'option_page_content'), $page['menu_slug'] );
 					}
@@ -102,8 +92,7 @@
 			 * @param void
 			 * @return html page content
 			 */
-			public function option_page_template()
-			{
+			public function option_page_template() {
 				sws_get_plugin_part( SWS_WPSL_OPTIONS_PAGES, 'sws_options_page_template' );
 			}
 
@@ -118,8 +107,7 @@
 			 * @param void
 			 * @return html page content
 			 */
-			public function option_page_content( $page )
-			{
+			public function option_page_content( $page ) {
 				sws_get_plugin_part( $this->view_src, $page['id'] );
 			}
 
@@ -131,11 +119,9 @@
 			 * @param void
 			 * @return string admin menu label
 			 */
-			public function modify_menus()
-			{
+			public function modify_menus() {
 				global $submenu;
-				if ( isset( $submenu['sws_wpsl_dashboard'] ) )
-				{
+				if ( isset( $submenu['sws_wpsl_dashboard'] ) ) {
 					$submenu['sws_wpsl_dashboard'][0][0] = __( 'Dashboard', 'sws_wpsl' );
 				}
 			}
