@@ -39,8 +39,8 @@
 			 * @param void
 			 * @return void
 			 */
-			public function __construct()
-			{
+			public function __construct() {
+
 				// Setup base plugin constants
 				$this->setup_constants();
 
@@ -55,6 +55,7 @@
 
 				// Setup action and filter hooks
 				$this->setup_hooks();
+
 			}
 
 
@@ -66,96 +67,151 @@
 			 * @return void
 			 */
 			public function setup_constants() {
+
 				// Plugin name
-				define('SWS_WPSL_PLUGIN_NAME', 'SWS WP Sports Leagues');
+				if ( ! defined( 'SWS_WPSL_PLUGIN_NAME' ) ) {					
+					define('SWS_WPSL_PLUGIN_NAME', 'SWS WP Sports Leagues');
+				}
 
 				// Plugin file name
-				define('SWS_WPSL_PLUGIN_FILE', plugin_basename(__FILE__));
+				if ( ! defined( 'SWS_WPSL_PLUGIN_FILE' ) ) {					
+					define('SWS_WPSL_PLUGIN_FILE', plugin_basename(__FILE__));
+				}
 
 				// Plugin version
-				define('SWS_WPSL_VERSION', '1.0.0');
-				
+				if ( ! defined( 'SWS_WPSL_VERSION' ) ) {	
+					define('SWS_WPSL_VERSION', '1.0.0');
+				}
+
 				// WPSM current database version
-				define('SWS_WPSL_DB_VERSION', 1);
+				if ( ! defined( 'SWS_WPSL_DB_VERSION' ) ) {					
+					define('SWS_WPSL_DB_VERSION', 1);
+				}
 
 				// WordPress compatibility version number
-				define('SWS_WPSL_REQUIRED_WP_VERSION', '3.5.2');
-				
+				if ( ! defined( 'SWS_WPSL_REQUIRED_WP_VERSION' ) ) {	
+					define('SWS_WPSL_REQUIRED_WP_VERSION', '3.5.2');
+				}
+
 				// WPSM required PHP version
-				define('SWS_WPSL_REQUIRED_PHP_VERSION', '5.3.0');
+				if ( ! defined( 'SWS_WPSL_REQUIRED_PHP_VERSION' ) ) {					
+					define('SWS_WPSL_REQUIRED_PHP_VERSION', '5.3.0');
+				}
 
 				// Plugin Website URL
-				define('SWS_WPSL_PLUGIN_URL', 'http://wpsportsleagues.com');
+				if ( ! defined( 'SWS_WPSL_PLUGIN_URL' ) ) {					
+					define('SWS_WPSL_PLUGIN_URL', 'http://wpsportsleagues.com');
+				}
 
 				// Plugin Support URL
-				define('SWS_WPSL_SUPPORT_URL', SWS_WPSL_PLUGIN_URL . '/support');
+				if ( ! defined( 'SWS_WPSL_SUPPORT_URL' ) ) {					
+					define('SWS_WPSL_SUPPORT_URL', SWS_WPSL_PLUGIN_URL . '/support');
+				}
 
 				// WordPress Version
-				define('WP_VERSION', get_bloginfo('version'));
-				
+				if ( ! defined( 'WP_VERSION' ) ) {	
+					define('WP_VERSION', get_bloginfo('version'));
+				}
+
 				// Skip choosing a sport to install
-				define('SWS_WPSL_SKIP_INSTALL', FALSE);
+				if ( ! defined( 'SWS_WPSL_SKIP_INSTALL' ) ) {					
+					define('SWS_WPSL_SKIP_INSTALL', FALSE);
+				}
 
 				// Plugin path
-				define('SWS_WPSL_PATH', plugin_dir_path(__FILE__));
-				
+				if ( ! defined( 'SWS_WPSL_PATH' ) ) {	
+					define('SWS_WPSL_PATH', plugin_dir_path(__FILE__));
+				}
+
 				// Controller directory
-				define('SWS_WPSL_OPTIONS', SWS_WPSL_PATH . 'options/');
-				
+				if ( ! defined( 'SWS_WPSL_OPTIONS' ) ) {	
+					define('SWS_WPSL_OPTIONS', SWS_WPSL_PATH . 'options/');
+				}
+
 				// Controller directory
-				define('SWS_WPSL_CLASSES', SWS_WPSL_PATH . 'classes/');
-				
+				if ( ! defined( 'SWS_WPSL_CLASSES' ) ) {	
+					define('SWS_WPSL_CLASSES', SWS_WPSL_PATH . 'classes/');
+				}
+
 				// Views directory
-				define('SWS_WPSL_VIEW', SWS_WPSL_PATH . 'views/');
-				
+				if ( ! defined( 'SWS_WPSL_VIEW' ) ) {	
+					define('SWS_WPSL_VIEW', SWS_WPSL_PATH . 'views/');
+				}
+
 				// Pages view directory
-				define('SWS_WPSL_PAGES', SWS_WPSL_VIEW . 'pages/');
-				
+				if ( ! defined( 'SWS_WPSL_PAGES' ) ) {	
+					define('SWS_WPSL_PAGES', SWS_WPSL_VIEW . 'pages/');
+				}
+
 				// Settings pages view directory
-				define('SWS_WPSL_OPTIONS_PAGES', SWS_WPSL_VIEW . 'pages/options/');
-				
+				if ( ! defined( 'SWS_WPSL_OPTIONS_PAGES' ) ) {	
+					define('SWS_WPSL_OPTIONS_PAGES', SWS_WPSL_VIEW . 'pages/options/');
+				}
+
 				// Dashboard widgets pages view directory
-				define('SWS_WPSL_DASHBOARD_WIDGET_PAGES', SWS_WPSL_VIEW . 'pages/dashboard_widgets/');
-				
+				if ( ! defined( 'SWS_WPSL_DASHBOARD_WIDGET_PAGES' ) ) {	
+					define('SWS_WPSL_DASHBOARD_WIDGET_PAGES', SWS_WPSL_VIEW . 'pages/dashboard_widgets/');
+				}
+
 				// Partials view directory
-				define('SWS_WPSL_PARTIALS', SWS_WPSL_VIEW . 'partials/');
-				
+				if ( ! defined( 'SWS_WPSL_PARTIALS' ) ) {	
+					define('SWS_WPSL_PARTIALS', SWS_WPSL_VIEW . 'partials/');
+				}
+
 				// Helper directory
-				define('SWS_WPSL_HELPERS', SWS_WPSL_PATH . 'helpers/');
-				
+				if ( ! defined( 'SWS_WPSL_HELPERS' ) ) {	
+					define('SWS_WPSL_HELPERS', SWS_WPSL_PATH . 'helpers/');
+				}
+
 				// Includes directory
-				define('SWS_WPSL_INC', SWS_WPSL_PATH . 'inc/');
-				
+				if ( ! defined( 'SWS_WPSL_INC' ) ) {	
+					define('SWS_WPSL_INC', SWS_WPSL_PATH . 'inc/');
+				}
+
 				// JavaScript directory
-				define('SWS_WPSL_JS', SWS_WPSL_VIEW . 'js/');	
-				
+				if ( ! defined( 'SWS_WPSL_JS' ) ) {	
+					define('SWS_WPSL_JS', SWS_WPSL_VIEW . 'js/');	
+				}
+
 				// CSS directory
-				define('SWS_WPSL_CSS', SWS_WPSL_VIEW . 'css/');	
-				
+				if ( ! defined( 'SWS_WPSL_CSS' ) ) {	
+					define('SWS_WPSL_CSS', SWS_WPSL_VIEW . 'css/');	
+				}
+
 				// Image directory
-				define('SWS_WPSL_IMG', SWS_WPSL_VIEW . 'img/');
-				
+				if ( ! defined( 'SWS_WPSL_IMG' ) ) {	
+					define('SWS_WPSL_IMG', SWS_WPSL_VIEW . 'img/');
+				}
+
 				// Image URL
-				define('SWS_WPSL_IMG_URL', plugins_url('wp-sports-leagues/view/img/'));
-				
+				if ( ! defined( 'SWS_WPSL_IMG_URL' ) ) {	
+					define('SWS_WPSL_IMG_URL', plugins_url('wp-sports-leagues/view/img/'));
+				}
+
 				// Style URL
-				define('SWS_WPSL_CSS_URL', plugins_url('wp-sports-leagues/view/css/'));
-				
+				if ( ! defined( 'SWS_WPSL_CSS_URL' ) ) {	
+					define('SWS_WPSL_CSS_URL', plugins_url('wp-sports-leagues/view/css/'));
+				}
+
 				// JavaScript URL
-				define('SWS_WPSL_JS_URL', plugins_url('wp-sports-leagues/view/js/'));
-			}
+				if ( ! defined( 'SWS_WPSL_JS_URL' ) ) {		
+						define('SWS_WPSL_JS_URL', plugins_url('wp-sports-leagues/view/js/'));
+				}}
+
 
 
 			public function setup_hooks() {
-				register_activation_hook( __FILE__, array($this, 'on_activation') );
-				register_deactivation_hook( __FILE__, array($this, 'on_deactivation') );
 
-				add_action( 'init', array($this, 'set_options_array') );
-				add_action( 'init', array($this, 'instantiate_classes') );
-				add_action( 'init', array($this, 'setup_post_types') );
-				add_action( 'init', array($this, 'setup_taxonomies') );
-				add_filter( 'plugin_action_links_' . SWS_WPSL_PLUGIN_FILE, array($this, 'filter_plugin_action_links') );
-				add_filter( 'manage_edit-teams_columns', array($this, 'custom_teams_table_columns') );
+				register_activation_hook( __FILE__, array( $this, 'on_activation' ) );
+				register_deactivation_hook( __FILE__, array( $this, 'on_deactivation' ) );
+
+				add_action( 'init', array( $this, 'set_options_array') );
+				add_action( 'init', array( $this, 'instantiate_classes') );
+				add_action( 'init', array( $this, 'setup_post_types') );
+				add_action( 'init', array( $this, 'setup_taxonomies') );
+				add_filter( 'plugin_action_links_' . SWS_WPSL_PLUGIN_FILE, array( $this, 'filter_plugin_action_links' ) );
+				add_filter( 'manage_edit-teams_columns', array( $this, 'custom_teams_table_columns' ) );
+
 			}
 
 
@@ -167,14 +223,17 @@
 			 * @return array the plugin options array
 			 */
 			public function set_options_array() {
-				$opts = require(SWS_WPSL_OPTIONS . 'sws_wpsl_options.php');
-				$this->opts = apply_filters('sws_wpsl_options', $opts);
+
+				$opts = require( SWS_WPSL_OPTIONS . 'sws_wpsl_options.php' );
+				$this->opts = apply_filters( 'sws_wpsl_options', $opts );
+
 			}
 
 
 			public function load_helpers() {
-				// Load any helper functions
+
 				require_once(SWS_WPSL_HELPERS . 'sws_wpsl_helpers.php');
+
 			}
 
 
@@ -186,10 +245,12 @@
 			 * @return void
 			 */
 			public function setup_default_options() {
+
 				$options = sws_get_plugin_options();
 				$options = $options ? $options : new \stdClass;
 				$options->plugin_version = SWS_WPSL_VERSION;
-				update_option('wpsl_core', $options);
+				update_option( 'wpsl_core', $options );
+
 			}
 
 
@@ -203,12 +264,14 @@
 			 * @return void
 			 */
 			public function autoload_classes( $class, $dir = SWS_WPSL_CLASSES )	{
-				$class = str_replace('sws_wpsl\\', '', strtolower($class));
+				
+				$class = str_replace( 'sws_wpsl\\', '', strtolower( $class ) );
 				$file = $dir . "$class.class.php";
 
-				if ( file_exists($file) ) {
-					require_once($file);
+				if ( file_exists( $file ) ) {
+					require_once( $file );
 				}
+
 			}
 
 
@@ -220,8 +283,10 @@
 			 * @return void
 			 */
 			public function instantiate_classes() {
-				new Options($this->opts['option_pages']);
-				new Dashboard_Widgets($this->opts);
+
+				new Options( $this->opts['option_pages'] );
+				new Dashboard_Widgets( $this->opts );
+
 			}
 
 
@@ -256,10 +321,12 @@
 			 * @return void
 			 */
 			public function setup_post_types() {
+
 				foreach ( $this->opts['post_types'] as $post_type => $args ) {
 					register_post_type( $post_type, $args );
-					add_filter( 'enter_title_here', array($this, 'change_title_placeholder'), 10, 2 );
+					add_filter( 'enter_title_here', array( $this, 'change_title_placeholder' ), 10, 2 );
 				}
+
 			}
 
 
@@ -274,9 +341,11 @@
 			 * @return void
 			 */
 			public function setup_taxonomies() {
+
 				foreach ( $this->opts['taxonomies'] as $taxonomy => $args )	{
 					register_taxonomy( $taxonomy, $taxonomy, $args );
 				}
+
 			}
 
 
@@ -291,10 +360,9 @@
 			 * @return $links modified links array
 			 */
 			public function filter_plugin_action_links( array $links ) {
-				return wp_parse_args(
-					$this->opts['action_links'],
-					$links
-				);
+
+				return wp_parse_args( $this->opts['action_links'], $links );
+
 			}
 
 
@@ -308,9 +376,11 @@
 			 * @return array the plugin options array
 			 */
 			public function custom_teams_table_columns( array $columns ) {
+
 				$columns = wp_parse_args( $this->opts['table_columns']['teams'], $columns );
-				unset($columns['date']);
+				unset( $columns['date'] );
 				return $columns;
+
 			}
 
 
@@ -322,7 +392,9 @@
 			 * @return array the plugin options array
 			 */
 			public function get_all_addons() {
+
 				return $this->_addons;
+
 			}
 
 
@@ -337,8 +409,10 @@
 			 * @return void
 			 */
 			public function register_addons( array $addon ) {
+
 				$this->_addons = array();
 				array_push( $this->_addons, $addon );
+
 			}
 
 			/**
@@ -349,8 +423,10 @@
 			 * @return string enter title here copy
 			 */
 			public function change_title_placeholder( $title ) {
+
 				$screen = get_current_screen();
 				switch ( $screen->post_type ) {
+
 					case 'teams':
 						$str = 'team name';
 						break;
@@ -373,7 +449,9 @@
 
 					default:
 						$str = 'title';
+
 				}
+
 				return sprintf('Enter %s here', $str);
 			}
 
