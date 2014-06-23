@@ -7,7 +7,7 @@
 		class Options extends WPSL {
 
 			/**
-			 * Hold plugin options from config array
+			 * Hold html for page view
 			 */
 			public $view_src;
 
