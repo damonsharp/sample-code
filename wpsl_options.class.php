@@ -2,15 +2,9 @@
 
 	defined( 'ABSPATH' ) OR exit;
 
-	if ( ! class_exists('Options') ) {
+	if ( ! class_exists( 'Options' ) ) {
 
-		class Options {
-
-			/**
-			 * Hold plugin options from config array
-			 */
-			public $opts;
-
+		class Options extends WPSL {
 
 			/**
 			 * Hold plugin options from config array
@@ -27,15 +21,16 @@
 			 * @param void
 			 * @return void
 			 */
-			public function __construct( $opts ) {
-				$this->opts = $opts;
+			public function __construct() {
 
+				parent::__construct();
 				// Create plugin options pages based on $this->opts
 				// ** NOTE: Keep priority at 9 or lower *******************************
 				add_action( 'admin_menu', array($this, 'initialize_option_pages'), 9 );
 
 				// Add options to option pages above
 				add_action( 'admin_init', array($this, 'register_options') );
+
 			}
 
 
@@ -50,8 +45,8 @@
 			 * @return html page content
 			 */
 			public function initialize_option_pages() {
-				// echo '<pre>'; print_r($this->opts); echo '</pre>';
-				foreach ( $this->opts as $page ) {
+
+				foreach ( $this->opts['option_pages'] as $page ) {
 					if ( $page['type'] == 'menu' ) {
 						add_menu_page($page['title'], $page['menu_title'], $page['capability'], $page['menu_slug'], array($this, $page['function']), $page['icon_url'], $page['position']);
 					} else {
@@ -59,6 +54,7 @@
 					}
 				}
 				$this->modify_menus();
+
 			}
 
 
@@ -74,7 +70,7 @@
 				register_setting('wpsl_core', 'wpsl_core', array('SWS_Validation', 'process_options') );
 				
 				// Plugin options from config file
-				foreach ( $this->opts as $page ) {
+				foreach ( $this->opts['option_pages'] as $page ) {
 					if ( sws_wpsl_page_is($page['menu_slug']) ) {
 						$this->view_src = $page['view_src'];
 						add_settings_section( $page['menu_slug'], $page['title'], array($this, 'option_page_content'), $page['menu_slug'] );
@@ -93,7 +89,9 @@
 			 * @return html page content
 			 */
 			public function option_page_template() {
+
 				sws_get_plugin_part( SWS_WPSL_OPTIONS_PAGES, 'sws_options_page_template' );
+
 			}
 
 
@@ -108,7 +106,9 @@
 			 * @return html page content
 			 */
 			public function option_page_content( $page ) {
+
 				sws_get_plugin_part( $this->view_src, $page['id'] );
+
 			}
 
 
@@ -120,11 +120,16 @@
 			 * @return string admin menu label
 			 */
 			public function modify_menus() {
+
 				global $submenu;
 				if ( isset( $submenu['sws_wpsl_dashboard'] ) ) {
+
 					$submenu['sws_wpsl_dashboard'][0][0] = __( 'Dashboard', 'sws_wpsl' );
+
 				}
+
 			}
 
 		}
+
 	}

@@ -2,7 +2,7 @@
 
 	defined( 'ABSPATH' ) OR exit;
 
-	if ( ! class_exists('WPSL') ) {
+	if ( ! class_exists( 'WPSL' ) ) {
 
 
 		/**
@@ -22,12 +22,12 @@
 			/**
 			 * Plugin options array
 			 */
-			public $opts;
+			public $opts = array();
 
 			/**
 			 * Registered addons array
 			 */
-			private $_addons;
+			private $_addons = array();
 
 
 			/**
@@ -43,6 +43,9 @@
 
 				// Setup base plugin constants
 				$this->setup_constants();
+
+				// Set options array
+				$this->opts = require( SWS_WPSL_OPTIONS . 'sws_wpsl_options.php' );
 
 				// Load any helper files
 				$this->load_helpers();
@@ -196,16 +199,23 @@
 				// JavaScript URL
 				if ( ! defined( 'SWS_WPSL_JS_URL' ) ) {		
 						define('SWS_WPSL_JS_URL', plugins_url('wp-sports-leagues/view/js/'));
-				}}
+				}
 
+			}
 
-
+			/**
+			 * Setup WordPress hooks and filters
+			 *
+			 * @since 1.0
+			 * @param void
+			 * @return void
+			 */
 			public function setup_hooks() {
 
 				register_activation_hook( __FILE__, array( $this, 'on_activation' ) );
 				register_deactivation_hook( __FILE__, array( $this, 'on_deactivation' ) );
 
-				add_action( 'init', array( $this, 'set_options_array') );
+				add_action( 'init', array( $this, 'filter_options_array') );
 				add_action( 'init', array( $this, 'instantiate_classes') );
 				add_action( 'init', array( $this, 'setup_post_types') );
 				add_action( 'init', array( $this, 'setup_taxonomies') );
@@ -222,11 +232,14 @@
 			 * @param void
 			 * @return array the plugin options array
 			 */
-			public function set_options_array() {
+			public function filter_options_array() {
 
-				$opts = require( SWS_WPSL_OPTIONS . 'sws_wpsl_options.php' );
-				$this->opts = apply_filters( 'sws_wpsl_options', $opts );
+				$this->opts = apply_filters( 'sws_wpsl_options', $this->opts );
 
+			}
+
+			public function get_options_array() {
+				return $this->opts;
 			}
 
 
@@ -264,7 +277,7 @@
 			 * @return void
 			 */
 			public function autoload_classes( $class, $dir = SWS_WPSL_CLASSES )	{
-				
+
 				$class = str_replace( 'sws_wpsl\\', '', strtolower( $class ) );
 				$file = $dir . "$class.class.php";
 
@@ -284,8 +297,8 @@
 			 */
 			public function instantiate_classes() {
 
-				new Options( $this->opts['option_pages'] );
-				new Dashboard_Widgets( $this->opts );
+				new Options;
+				new Dashboard_Widgets;
 
 			}
 
@@ -410,7 +423,6 @@
 			 */
 			public function register_addons( array $addon ) {
 
-				$this->_addons = array();
 				array_push( $this->_addons, $addon );
 
 			}
