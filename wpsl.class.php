@@ -47,6 +47,10 @@
 				// Set options array
 				$this->opts = require( SWS_WPSL_OPTIONS . 'sws_wpsl_options.php' );
 
+			}
+
+			public function init() {
+				
 				// Load any helper files
 				$this->load_helpers();
 
@@ -471,4 +475,5 @@
 
 		// Get the party started...
 		$wpsl = new WPSL;
+		$wpsl->init();
 	}
