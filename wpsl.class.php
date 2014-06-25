@@ -14,7 +14,7 @@
 		* Author URI: http://sharpwebsolutions.com
 		* License: ??
 		*
-		* Copyright 2014 Damon Sharp (http://damonshapr.me)
+		* Copyright 2014 Damon Sharp (http://damonsharp.me)
 		*
 		**/
 		class WPSL {
