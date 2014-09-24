@@ -474,6 +474,6 @@
 		}
 
 		// Get the party started...
-		$wpsl = new WPSL;
-		$wpsl->init();
+		$wpsl = (new WPSL)->init();
+
 	}

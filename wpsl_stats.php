@@ -88,6 +88,7 @@
 
 				global $wpsl;
 				$wpsl->autoload_classes( $class, SWS_WPSL_STATS_CLASSES );
+				
 			}
 
 
