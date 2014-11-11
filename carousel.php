@@ -4,7 +4,8 @@
 			'post_type' => 'carousels',
 			'orderby' => 'menu-order',
 			'order' => 'asc',
-			'posts_per_page' => -1
+			'posts_per_page' => 5,
+			'no_found_rows' => true
 		)
 	);
 ?>
