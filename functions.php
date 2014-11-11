@@ -142,7 +142,7 @@
 			add_filter( 'body_class', array( $this, 'additional_body_classes' ) );
 			add_filter( 'post_class', array( $this, 'additional_post_classes' ) );
 			
-			// Add Trident logo to admin login page
+			// Add logo to admin login page
 			add_action( 'login_enqueue_scripts', array( $this, 'custom_login_logo' ) );
 			remove_action( 'the_content', 'wpautop' );
 
