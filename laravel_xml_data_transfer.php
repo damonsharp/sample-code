@@ -90,7 +90,7 @@
             // Query the registrations database table for any registrations that were updated
             // and/or added AFTER the last_xml_dump date. If the last_xml_dump value is empty, then
             // just get all registrations from that table
-            if ( empty($this->_last_xml_dump) || $this->_last_xml_dump == '0000-00-00 00:00:00' )
+            if ( empty( $this->_last_xml_dump ) || '0000-00-00 00:00:00' == $this->_last_xml_dump )
             {
                 $registration_data = Registration::all();
             }
